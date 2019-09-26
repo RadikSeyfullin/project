@@ -1,0 +1,88 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ONAWAY ToDo list</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        On a way
+      </div>
+      <div class="underlogo">
+        Todo list for project creation
+      </div>
+      <div class="txtb">
+        <form class="" action="/addTodo/" method="post">
+          {% csrf_token %}
+          <input type="text" class="txt_add" id="add_item" name="add_item" placeholder="Add a task">
+          <div class="right">
+            <select class="txt_cat" name="add_category">
+              {% for cat in categories %}
+                <option>{{ cat.title }}</option>
+              {% endfor %}
+            </select>
+            <input type="submit" class="txt_sub" value="Add">
+          </div>
+        </form>
+      </div>
+      <div class="notcomp">
+        <h3>Not Completed</h3>
+        {% if not_comp_todos.count == 0 %}
+          NOoooo such items! :( Just add new one :D
+        {% endif %}
+        {% for item in not_comp_todos %}
+          {% if item.deleted == False %}
+            <div class="task">
+              {{ item.title }}
+              <div class="right">
+                {% for cat in categories %}
+                  {% if cat.id == item.category_id %}
+                    {% if cat.color == 'red' or cat.color == 'black' or cat.color == 'blue' %}
+                      <span style="background-color: {{ cat.color }}; color: #fff;">{{ cat.title }}</span>
+                    {% else %}
+                      <span style="background-color: {{ cat.color }}; color: #000;">{{ cat.title }}</span>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
+                <a href="/completeTodo/{{ item.id }}"><i class="fas fa-check"></i></a>
+              </div>
+            </div>
+          {% else %}
+          NOoooo such items! :( Just add new one :D
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="comp">
+        <h3>Completed</h3>
+        {% if comp_todos.count == 0 %}
+          NOoooo such items! :( Just add new one :D
+        {% endif %}
+        {% for item in comp_todos %}
+          {% if item.deleted == False %}
+            <div class="task">
+              {{ item.title }}
+              <div class="right">
+                {% for cat in categories %}
+                  {% if cat.id == item.category_id %}
+                    <span style="background-color: #2d2d2d; color: #fff;">{{ cat.title }}</span>
+                  {% endif %}
+                {% endfor %}
+                <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
+                <a href="/notcompleteTodo/{{ item.id }}"><i class="fas fa-times"></i></a>
+              </div>
+            </div>
+          {% else %}
+            NOoooo such items! :( Just add new one :D
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
