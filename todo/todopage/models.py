@@ -5,6 +5,7 @@ from django.utils import timezone
 class Category(models.Model):
     title = models.CharField(max_length=100)
     created = models.DateField(auto_now_add=True)
+    color = models.CharField(max_length=50, default='default')
 
     class Meta:
         verbose_name = ('Category')
