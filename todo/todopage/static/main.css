@@ -44,7 +44,7 @@ body {
   padding: 10px;
   outline: none;
   font-size: 18px;
-  width: calc(100% - 250px);
+  width: calc(100% - 270px);
 }
 
 .txt_add::placeholder {

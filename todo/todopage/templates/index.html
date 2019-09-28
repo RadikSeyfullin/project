@@ -24,7 +24,7 @@
           <div class="right">
             <select class="txt_cat" name="add_category">
               {% for cat in categories %}
-                <option>{{ cat.title }}</option>
+                <option style="background-color: {{ cat.color }};">{{ cat.title }}</option>
               {% endfor %}
             </select>
             <input type="submit" class="txt_sub" value="Add">
