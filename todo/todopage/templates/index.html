@@ -12,7 +12,7 @@
   <body>
     <div class="container">
       <div class="logo">
-        On a way
+        <a href="/">On a way</a>
       </div>
       <div class="underlogo">
         Todo list for project creation
@@ -24,46 +24,49 @@
           <div class="right">
             <select class="txt_cat" name="add_category">
               {% for cat in categories %}
-                <option>{{ cat.title }}</option>
+                <option style="background-color: {{ cat.color }};">{{ cat.title }}</option>
               {% endfor %}
             </select>
             <input type="submit" class="txt_sub" value="Add">
           </div>
         </form>
       </div>
+      <br>
       <div class="notcomp">
         <h3>Not Completed</h3>
-        {% if not_comp_todos.count == 0 %}
-          NOoooo such items! :( Just add new one :D
-        {% endif %}
+        {% if yesnotnotcomp %}
         {% for item in not_comp_todos %}
           {% if item.deleted == False %}
             <div class="task">
-              {{ item.title }}
+              <label>{{ item.title }}</label>
               <div class="right">
                 {% for cat in categories %}
                   {% if cat.id == item.category_id %}
                     {% if cat.color == 'red' or cat.color == 'black' or cat.color == 'blue' %}
-                      <span style="background-color: {{ cat.color }}; color: #fff;">{{ cat.title }}</span>
+                      <a href="/{{ cat.title }}"><span style="background-color: {{ cat.color }}; color: #fff;">{{ cat.title }}</span></a>
                     {% else %}
-                      <span style="background-color: {{ cat.color }}; color: #000;">{{ cat.title }}</span>
+                      <a href="/{{ cat.title }}"><span style="background-color: {{ cat.color }}; color: #000;">{{ cat.title }}</span></a>
                     {% endif %}
                   {% endif %}
                 {% endfor %}
                 <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
                 <a href="/completeTodo/{{ item.id }}"><i class="fas fa-check"></i></a>
               </div>
+              <div class="box">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </div>
             </div>
-          {% else %}
-          NOoooo such items! :( Just add new one :D
           {% endif %}
         {% endfor %}
+        {% else %}
+          NOooooo such items :D
+        {% endif %}
       </div>
+      <hr>
+      <br>
       <div class="comp">
         <h3>Completed</h3>
-        {% if comp_todos.count == 0 %}
-          NOoooo such items! :( Just add new one :D
-        {% endif %}
+        {% if yesnotcomp %}
         {% for item in comp_todos %}
           {% if item.deleted == False %}
             <div class="task">
@@ -71,17 +74,18 @@
               <div class="right">
                 {% for cat in categories %}
                   {% if cat.id == item.category_id %}
-                    <span style="background-color: #2d2d2d; color: #fff;">{{ cat.title }}</span>
+                    <a href="/{{ cat.title }}"><span style="background-color: #2d2d2d; color: #fff;">{{ cat.title }}</span></a>
                   {% endif %}
                 {% endfor %}
                 <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
                 <a href="/notcompleteTodo/{{ item.id }}"><i class="fas fa-times"></i></a>
               </div>
             </div>
-          {% else %}
-            NOoooo such items! :( Just add new one :D
           {% endif %}
         {% endfor %}
+        {% else %}
+          NOooooo such items :D
+        {% endif %}
       </div>
     </div>
   </body>

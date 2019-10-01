@@ -7,4 +7,5 @@ urlpatterns = [
     path('deleteTodo/<int:todo_id>/', views.deleteTodo, name="deleteTodo"),
     path('completeTodo/<int:todo_id>', views.completeTodo, name="completeTodo"),
     path('notcompleteTodo/<int:todo_id>', views.notcompleteTodo, name="notcompleteTodo"),
+    path('<category_name>', views.viewCategory, name="viewCategory"),
 ]

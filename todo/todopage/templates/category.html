@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ONAWAY ToDo list | {{ item.title }}</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <a href="/">On a way</a>
+      </div>
+      <div class="underlogo">
+        Todo list for project creation
+      </div>
+      <br><br>
+      <h1 style="width:100%; text-align: center; background-color: {{ item_cat.color }}; border-radius: 10px; color: #fff; height: 50px; line-height: 50px;">{{ item_cat.title }}</h1>
+      <div class="notcomp">
+        <h3>Not Completed</h3>
+        {% for item in not_comp_todos %}
+          {% if item.deleted == False and item.category_id == item_cat.id %}
+            <div class="task">
+              {{ item.title }}
+              <div class="right">
+                <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
+                <a href="/completeTodo/{{ item.id }}"><i class="fas fa-check"></i></a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <hr><br>
+      <div class="comp">
+        <h3>Completed</h3>
+        {% for item in comp_todos %}
+          {% if item.deleted == False and item.category_id == item_cat.id %}
+            <div class="task">
+              {{ item.title }}
+              <div class="right">
+                <a href="/deleteTodo/{{ item.id }}"><i class="fas fa-trash-alt"></i></a>
+                <a href="/notcompleteTodo/{{ item.id }}"><i class="fas fa-times"></i></a>
+              </div>
+            </div>
+          {% else %}
+          {% endif %}
+        {% endfor %}
+      </div>
+  </body>
+</html>

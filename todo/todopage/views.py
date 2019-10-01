@@ -7,7 +7,13 @@ def index(request):
     not_comp_todos = TodoList.objects.filter(status=False)
     comp_todos = TodoList.objects.filter(status=True)
     categories = Category.objects.all()
-    return render(request, 'index.html', {'not_comp_todos': not_comp_todos, 'comp_todos': comp_todos, 'categories': categories})
+    yesnotcomp = True
+    yesnotnotcomp = True
+    if not_comp_todos.count() == 0:
+        yesnotnotcomp = False
+    if comp_todos.count() == 0:
+        yesnotcomp = False
+    return render(request, 'index.html', {'yesnotnotcomp': yesnotnotcomp, 'yesnotcomp': yesnotcomp, 'not_comp_todos': not_comp_todos, 'comp_todos': comp_todos, 'categories': categories})
 
 def addTodo(request):
     new_item = request.POST['add_item']
@@ -34,3 +40,9 @@ def notcompleteTodo(request, todo_id):
     item.status = False
     item.save()
     return HttpResponseRedirect('/')
+
+def viewCategory(request, category_name):
+    item = Category.objects.get(title=category_name)
+    not_comp_todos = TodoList.objects.filter(status=False)
+    comp_todos = TodoList.objects.filter(status=True)
+    return render(request, 'category.html', {'item_cat': item, 'not_comp_todos': not_comp_todos, 'comp_todos': comp_todos})
